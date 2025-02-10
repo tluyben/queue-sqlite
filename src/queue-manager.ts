@@ -23,12 +23,15 @@ export class QueueManager {
 
   start() {
     for (let i = 0; i < this.numWorkers; i++) {
-      const worker = new Worker(path.join(__dirname, "worker.js"), {
-        env: {
-          DB_PATH: this.dbPath,
-          WORKER_ID: i.toString(),
-        },
-      });
+      const worker = new Worker(
+        path.join(__dirname, "..", "dist", "worker.js"),
+        {
+          env: {
+            DB_PATH: this.dbPath,
+            WORKER_ID: i.toString(),
+          },
+        }
+      );
 
       worker.on("error", (error) => {
         console.error(`Worker ${i} error:`, error);
